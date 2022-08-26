@@ -12,11 +12,11 @@ func main() {
 	app := http.NewServeMux()
 	app.HandleFunc("/do", func(w http.ResponseWriter, r *http.Request) {
 		userApi := api.UserApi{}
-		userApi.DeleteMaxIdUser()
-		//userApi.UpdateMinIdUser("Ekaterina", "Romanova", "Nicknamovna", "she")
-		userApi.CreateUser("Boris", "Holov", "Nikolaevich", "ne-popadesh")
 		uArr := userApi.GetAllUsers()
-		xmlArr, _ := xml.Marshal(uArr)
+		userApi.DeleteMaxIdUser(uArr)
+		userApi.UpdateMinIdUser(uArr, "Ekaterina", "Romanova", "Nicknamovna", "she")
+		userApi.CreateUser("Boris", "Holov", "Nikolaevich", "ne-popadesh")
+		xmlArr, _ := xml.Marshal(userApi.GetAllUsers())
 		w.Write(xmlArr)
 	})
 
@@ -26,7 +26,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-// [
-// {"Id":16,"Name":"max","SecondName":"Egorov","FatherName":"Alexeeyevich","UserName":"max"},
-// {"Id":15,"Name":"Vagon","SecondName":"Mops","FatherName":"Ushat","UserName":"editClient"}
-// ]

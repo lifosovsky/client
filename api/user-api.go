@@ -44,9 +44,8 @@ func (a *UserApi) GetAllUsers() (uArr []models.User) {
 	return
 }
 
-func (a *UserApi) DeleteMaxIdUser() {
+func (a *UserApi) DeleteMaxIdUser(uArr []models.User) {
 	client := &http.Client{}
-	uArr := a.GetAllUsers()
 	req, err := http.NewRequest(http.MethodDelete, "http://localhost:8000/api/users/" + strconv.Itoa(helpers.FindMaxId(uArr)), nil)
 	if err != nil {
 		log.Fatal(err)
@@ -55,9 +54,8 @@ func (a *UserApi) DeleteMaxIdUser() {
 	return
 }
 
-func (a *UserApi) UpdateMinIdUser(name, secondName, fatherName, userName string) {
+func (a *UserApi) UpdateMinIdUser(uArr []models.User, name, secondName, fatherName, userName string) {
 	client := &http.Client{}
-	uArr := a.GetAllUsers()
 	user := models.User{Name: name, SecondName: secondName, FatherName: fatherName, UserName: userName}
 	jsonPut, _ := json.Marshal(user)
 	req, err := http.NewRequest(http.MethodPut, "http://localhost:8000/api/users/" + strconv.Itoa(helpers.FindMaxId(uArr)), bytes.NewBuffer(jsonPut))
